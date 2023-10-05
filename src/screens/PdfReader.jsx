@@ -9,12 +9,7 @@ import { heightPercentageToDP, widthPercentageToDP } from 'react-native-responsi
 const PdfViewer = ({route}) => {
     const [url,setUrl]=useState('');
     const {bookLink} =route.params;
-    useEffect(()=>{
-      // setUrl(bookLink);
-      console.log(bookLink)
-    },[])
-
-    
+   
     const [pageNumber,setPageNumber]=useState(1);
     const [totalPages,setTotalPages]=useState(1);
   return (
@@ -31,6 +26,7 @@ const PdfViewer = ({route}) => {
                       onLoadComplete={(numberOfPages, filePath) => {
                         console.log(`Number of pages: ${pageNumber}`);
                       }}
+                      renderActivityIndicator={<ActivityIndicator size={'large'} color={'gray'} />}
                       onPageChanged={(page, numberOfPages) => {
                         // console.log(`Current page: ${page}`);
                         setPageNumber(page);

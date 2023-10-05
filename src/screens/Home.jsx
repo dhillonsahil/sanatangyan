@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 const Home = () => {
   const navigation = useNavigation();
   const [categories,setCategories]=useState([])
-  const [recommnded,setRecommnded]=useState([{"bookname":"gitaHindi","imageUrl":"http://192.168.101.190:5001/uploads/bhagvatgita.jpg","pdfLink":"http://192.168.101.190:5001/uploads/bhagvad-gita-hindi.pdf"},{"bookname":"gitaHindi","imageUrl":"http://192.168.101.190:5001/uploads/bhagvatgita.jpg","pdfLink":"http://192.168.101.190:5001/uploads/bhagvad-gita-hindi.pdf"},{"bookname":"gitaHindi","imageUrl":"http://192.168.101.190:5001/uploads/bhagvatgita.jpg","pdfLink":"http://192.168.101.190:5001/uploads/bhagvad-gita-hindi.pdf"},{"bookname":"gitaHindi","imageUrl":"http://192.168.101.190:5001/uploads/bhagvatgita.jpg","pdfLink":"http://192.168.101.190:5001/uploads/bhagvad-gita-hindi.pdf"}])
+  const [recommnded,setRecommnded]=useState([])
   useEffect(()=>{
     const getCategories = async()=>{
       const response = await fetch('http://192.168.101.190:5001/api/getbook/getCategories');
@@ -16,6 +16,12 @@ const Home = () => {
       setCategories(res);
     }
     getCategories()
+    const getRecommended = async()=>{
+      const response = await fetch('http://192.168.101.190:5001/api/getbook/getrecommended');
+      const res = await response.json();
+      setRecommnded(res);
+    }
+    getRecommended()
   },[])
 
  
@@ -31,8 +37,14 @@ const Home = () => {
           recommnded.map((item,index)=>{
             return (
               <View key={index} style={{height:hp(25),marginHorizontal:hp(2)}}>
+                <Pressable onPress={()=>{
+                  navigation.navigate('PdfReader',{
+                    bookLink:item.pdfLink
+                  })
+                }}>
                 <Image style={{height:hp(22),borderRadius:5,width:wp(30)}} src={item.imageUrl}/>
                 <Text className="text-neutral-500">{item.bookname}</Text>
+                </Pressable>
               </View>
       
       )
