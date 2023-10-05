@@ -9,6 +9,7 @@ import Notifications from './screens/Notifications'
 import BookDetails from './screens/BookDetails'
 import AllBooks from './screens/AllBooks'
 import PdfViewer from './screens/PdfReader'
+import Pdf from 'react-native-pdf'
 
 const Stack= createNativeStackNavigator();
 const App = () => {
